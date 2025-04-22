@@ -1,0 +1,17 @@
+audio:
+  sample_rate: 16000
+  output_format: wav
+
+transcription:
+  model_name: base
+  language: zh  # chinois
+
+translation:
+  model: mbart
+  source_lang: zh
+  target_lang: fr
+
+paths:
+  raw_data: data/raw/
+  processed_data: data/processed/
+  models: models/
