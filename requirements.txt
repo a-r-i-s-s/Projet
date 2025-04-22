@@ -15,3 +15,13 @@ pytest
 scikit-learn
 joblib 
 streamlit
+
+
+# NLP models and utilities
+transformers
+
+openai-whisper
+
+tqdm
+
+torch
