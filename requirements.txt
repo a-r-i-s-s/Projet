@@ -1,5 +1,17 @@
+# Traitement texte & data
 numpy
 pandas
+
+# Manipulation audio
+ffmpeg-python
+
+# YAML config
+pyyaml
+
+# Dev utils
+pytest
+
+
 scikit-learn
 joblib 
 streamlit
