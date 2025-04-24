@@ -1,27 +1,29 @@
+# App web
+streamlit==1.44.1
+streamlit-option-menu           # (optionnel mais utile pour l'UI)
+
 # Traitement texte & data
-numpy
-pandas
+numpy==2.2.5
+pandas==2.2.3
 
-# Manipulation audio
-ffmpeg-python
+# Manipulation audio/vidéo
+ffmpeg-python==0.2.0
+moviepy
+av                              # pour la gestion vidéo de Streamlit
 
-# YAML config
-pyyaml
+# YAML config 
+pyyaml==6.0.1
 
-# Dev utils
-pytest
-
-
-scikit-learn
-joblib 
-streamlit
-
-
-# NLP models and utilities
+# NLP & modèles 
 transformers
 
-openai-whisper
-
+# Utils
 tqdm
+joblib
 
+# Transcription 
 torch
+
+# You also have to install the openai whisper model
+# You can to it with this command line
+# pip install git+https://github.com/openai/whisper.git --no-build-isolation
