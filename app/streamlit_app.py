@@ -1,5 +1,10 @@
 import streamlit as st
 
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.translation import translator as tor
 
 st.title("🎥 Traduction automatique vidéo CH ➜ FR")
