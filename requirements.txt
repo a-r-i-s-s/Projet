@@ -8,7 +8,7 @@ pandas==2.2.3
 
 # Manipulation audio/vidéo
 ffmpeg-python==0.2.0
-moviepy
+moviepy==1.0.3
 av                              # pour la gestion vidéo de Streamlit
 
 # YAML config 
@@ -23,6 +23,14 @@ joblib
 
 # Transcription 
 torch
+torchvision
+torchaudio
+openai-whisper
+ffmpeg-python
+srt==3.5.3
+
+#Traduction
+googletrans==4.0.0rc1
 
 # You also have to install the openai whisper model
 # You can to it with this command line
