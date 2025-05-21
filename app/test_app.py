@@ -1,5 +1,3 @@
-#script not tested yet
-
 try:
     import whisper
 except ImportError:
@@ -11,7 +9,7 @@ from datetime import timedelta
 import subprocess
 
 # --- STEP 1: Extract Audio from Video ---
-video_path = "input_video.mp4"
+video_path = "input_video_2.mp4"
 audio_path = "audio.wav"
 
 video = VideoFileClip(video_path)

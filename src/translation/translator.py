@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-def process_video():
-    pass
-=======
 import sys
 import os
 
@@ -25,4 +21,3 @@ class SubtitleTranslator:
         except Exception as e:
             print(f"Translation error: {str(e)}")
             return None
->>>>>>> feature/new_branch_remy

@@ -10,7 +10,7 @@ class Config:
     os.makedirs(DATA_DIR, exist_ok=True)
     
     # File paths
-    VIDEO_PATH = os.path.join(DATA_DIR, "input_video.mp4")
+    VIDEO_PATH = os.path.join(DATA_DIR, "input_video_2.mp4")
     AUDIO_PATH = os.path.join(DATA_DIR, "audio.wav")
     SUBTITLE_PATH = os.path.join(DATA_DIR, "subtitles.srt")
     OUTPUT_VIDEO_PATH = os.path.join(DATA_DIR, "output_video.mp4")
