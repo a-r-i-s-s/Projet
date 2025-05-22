@@ -1,19 +1,127 @@
 import streamlit as st
+import yt_dlp
+import tempfile
 
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+# On l'insère en tête de sys.path
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+    
 from src.translation import translator as tor
 
-st.title("🎥 Traduction automatique vidéo CH ➜ FR")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-uploaded_file = st.file_uploader("Dépose une vidéo ici", type=["mp4", "mov", "avi"])
 
-if uploaded_file is not None:
-    with st.spinner("Traitement en cours..."):
-        srt_path = tor.process_video(uploaded_file)
-        st.success("Sous-titres générés !")
-        st.download_button("⬇️ Télécharger les sous-titres", open(srt_path, "rb"), file_name="subtitles.srt")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+ 
+ 
+st.title("🎥 Traduction automatique vidéo CH / EN / FR")
 
+
+original_language = st.radio(
+    "La vidéo est en :",
+    ("Anglais", "Français", "Chinois")
+)
+
+final_language = st.radio(
+    "Vous voulez des sous-titres en :",
+    ("Anglais", "Français", "Chinois")
+)
+st.write("Original : ", original_language, "/ Final : ", final_language)
+
+
+
+if original_language != final_language :
+    
+    uploaded_file = st.file_uploader("Dépose une vidéo ici", type=["mp4", "mov", "avi"])
+
+    if uploaded_file is not None:
+        with st.spinner("Traitement en cours..."):
+            
+            # - - - - - - 
+            # Appelle la fonction de traitement vidéo, à modifier 
+            srt_path = tor.process_video(uploaded_file)
+            st.success("Sous-titres générés !")
+            st.download_button("⬇️ Télécharger les sous-titres", open(srt_path, "rb"), file_name="subtitles.srt")
+            
+            
+    url = st.text_input("Entre l'URL de la vidéo YouTube :")
+    
+    if url != "":
+        
+        ydl_opts = {
+            'quiet': True,
+            'skip_download': True,
+            'noplaylist': True,
+            'no_warnings': True,
+        }
+
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                
+                # - - - - - - 
+                # Appelle la fonction de traitement vidéo, à modifier 
+            
+                info = ydl.extract_info(url, download=False)
+                st.success("Vidéo analysée sans cookies ✅")
+                st.write("**Titre :**", info.get('title'))
+                st.write("**Auteur :**", info.get('uploader'))
+                st.video(info.get('url'))
+            
+            
+        except yt_dlp.utils.DownloadError as e:
+            error_msg = str(e).lower()
+
+            if "sign in to confirm" in error_msg or "cookies" in error_msg:
+                st.warning("Échec sans cookies. Tentative avec cookies...")
+            
+                cookies_file = st.file_uploader("Importe ton fichier `cookies.txt`", type=['txt'])
+
+                if not cookies_file:
+                    st.error("Cette vidéo nécessite des cookies. Veuillez importer un fichier `cookies.txt`.")
+                else:
+                    
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as tmp:
+                        tmp.write(cookies_file.read())
+                        tmp_path = tmp.name
+                    
+                    ydl_opts_with_cookies = {
+                        'cookiefile': tmp_path,
+                        'quiet': True,
+                        'noplaylist': True,
+                        'skip_download': True,
+                        'force_generic_extractor': False
+                    }
+
+                    try:
+                        with yt_dlp.YoutubeDL(ydl_opts_with_cookies) as ydl:
+                            
+                            # - - - - - - 
+                            # Appelle la fonction de traitement vidéo, à modifier 
+            
+                            info = ydl.extract_info(url, download=False)
+                            st.success("Vidéo analysée avec cookies ✅")
+                            st.write("**Titre :**", info.get('title'))
+                            st.write("**Auteur :**", info.get('uploader'))
+                            st.video(info.get('url'))
+
+                    except Exception as e2:
+                        st.error("Erreur même avec cookies. Veuilez rafraichir les cookies.")
+                        
+                st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) pour exporter vos cookies depuis **FireFox**.""")
+                st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Get cookies.txt](https://chrome.google.com/webstore/detail/get-cookiestxt/lopibhbgjfmmaghejbkojkfjbdhkccme) pour exporter vos cookies depuis **Chrome**.""")
+
+            elif "not a valid url" in error_msg or "invalid" in error_msg:
+                st.error("❌ L'URL fournie est invalide.")
+            else:
+                st.error(f"❌ Erreur inconnue. Veuillez vérifier l'URL ou le fichier de cookies.")
+
+# Si on veut lancer l'app et pouvoir mettre des vidéos de 1 Go, il faut lancer avec la commande suivante :
+# streamlit run app/streamlit_app.py --server.maxUploadSize=1024
+
+# Ne pas faire attention aux messages d'erreur
+
+# La librairie permet de télécharger, à voir si on peut la traiter sans la download, si on la charge dans un fichier temp, ou en local

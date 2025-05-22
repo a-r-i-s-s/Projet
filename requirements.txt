@@ -11,6 +11,8 @@ ffmpeg-python==0.2.0
 moviepy==1.0.3
 av                              # pour la gestion vidéo de Streamlit
 
+py-dlp
+
 # YAML config 
 pyyaml==6.0.1
 

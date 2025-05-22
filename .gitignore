@@ -2,6 +2,9 @@
 venv/
 .env
 
+venvProjet/
+.env
+
 # Fichiers Python inutiles
 __pycache__/
 *.py[cod]
