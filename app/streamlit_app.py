@@ -93,7 +93,10 @@ if original_language != final_language :
                         'quiet': True,
                         'noplaylist': True,
                         'skip_download': True,
-                        'force_generic_extractor': False
+                        'http_headers': {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36',
+                        },
+                        'ignoreerrors': True
                     }
 
                     try:
@@ -123,5 +126,8 @@ if original_language != final_language :
 # streamlit run app/streamlit_app.py --server.maxUploadSize=1024
 
 # Ne pas faire attention aux messages d'erreur
+# Si ça marche pas, c'est peut-être que la librairie yt-dlp n'est pas à jour
+# Pour l'update : pip install -U yt-dlp
 
 # La librairie permet de télécharger, à voir si on peut la traiter sans la download, si on la charge dans un fichier temp, ou en local
+
