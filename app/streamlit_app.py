@@ -11,6 +11,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
     
 from src.translation import translator as tor
+from app.main import main
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -40,12 +41,18 @@ if original_language != final_language :
 
     if uploaded_file is not None:
         with st.spinner("Traitement en cours..."):
+            # Either use the translator
+            # srt_path = tor.process_video(uploaded_file)
+            # OR capture the return value from main()
+            srt_path = main()
             
-            # - - - - - - 
-            # Appelle la fonction de traitement vidéo, à modifier 
-            srt_path = tor.process_video(uploaded_file)
-            st.success("Sous-titres générés !")
-            st.download_button("⬇️ Télécharger les sous-titres", open(srt_path, "rb"), file_name="subtitles.srt")
+            if srt_path:  # Add error handling
+                st.success("Sous-titres générés !")
+                st.download_button("⬇️ Télécharger les sous-titres", 
+                                 open(srt_path, "rb"), 
+                                 file_name="subtitles.srt")
+            else:
+                st.error("Erreur lors de la génération des sous-titres")
             
             
     url = st.text_input("Entre l'URL de la vidéo YouTube :")
@@ -130,4 +137,3 @@ if original_language != final_language :
 # Pour l'update : pip install -U yt-dlp
 
 # La librairie permet de télécharger, à voir si on peut la traiter sans la download, si on la charge dans un fichier temp, ou en local
-
