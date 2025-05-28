@@ -17,6 +17,8 @@ class Transcriber:
     
     def transcribe(self, audio_path=Config.AUDIO_PATH, language=Config.SOURCE_LANG_TRANSCRIBE):
         try:
+            if(language == "zh-cn"):
+                language = "zh"
             result = self.model.transcribe(audio_path, language=language)
             return result["segments"]
         except Exception as e:

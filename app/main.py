@@ -17,20 +17,20 @@ def check_input_file():
         return False
     return True
 
-def main():
+def main(original_language, final_language):
     # Extract audio
     if not extract_audio():
         return
     
     # Transcribe
     transcriber = Transcriber()
-    segments = transcriber.transcribe()
+    segments = transcriber.transcribe(language = original_language)
     if not segments:
         return
     
     # Translate
     translator = SubtitleTranslator()
-    translated_segments = translator.translate_segments(segments)
+    translated_segments = translator.translate_segments(segments, original_language, final_language) 
     if not translated_segments:
         return
     

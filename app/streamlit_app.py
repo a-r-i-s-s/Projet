@@ -1,9 +1,13 @@
+import sys
+import os
+os.environ["STREAMLIT_USE_WATCHDOG"] = "false"
+sys.modules['torch.classes'] = None
+
+
 import streamlit as st
 import yt_dlp
 import tempfile
 
-import sys
-import os
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 # On l'insère en tête de sys.path
@@ -11,6 +15,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
     
 from src.translation import translator as tor
+from app.main import main
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -20,22 +25,31 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
  
 st.title("🎥 Traduction automatique vidéo CH / EN / FR")
 
+language_map = {
+    "English": "en",
+    "French": "fr",
+    "Chinese": "zh-cn"
+}
 
 original_language = st.radio(
     "La vidéo est en :",
-    ("Anglais", "Français", "Chinois")
+    ("English", "French", "Chinese")
 )
 
 final_language = st.radio(
     "Vous voulez des sous-titres en :",
-    ("Anglais", "Français", "Chinois")
+    ("English", "French", "Chinese")
 )
 st.write("Original : ", original_language, "/ Final : ", final_language)
 
-
+original_language = language_map[original_language]
+final_language = language_map[final_language]
 
 if original_language != final_language :
     
+    if(st.button("Lancer la traduction")):
+        main(original_language, final_language)
+        
     uploaded_file = st.file_uploader("Dépose une vidéo ici", type=["mp4", "mov", "avi"])
 
     if uploaded_file is not None:
