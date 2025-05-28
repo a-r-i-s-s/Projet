@@ -79,7 +79,6 @@ if original_language != final_language :
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
             # Set up yt-dlp options with the temp file path
             ydl_opts = {
-                'format': 'best',  # Get best quality
                 'noplaylist': True,
                 'no_warnings': True,
                 'outtmpl': temp_file.name,  # Now temp_file is defined
@@ -92,28 +91,21 @@ if original_language != final_language :
                     info = ydl.extract_info(url, download=True)
                     temp_path = temp_file.name
                     
-                # Process the video
-                main(temp_path, original_language, final_language)
-                
-                # Display video info
-                st.success("Vidéo téléchargée et analysée ✅")
-                st.write("**Titre :**", info.get('title'))
-                st.write("**Auteur :**", info.get('uploader'))
-                st.video(temp_path)  # Show local video instead of URL
-            
-                # Add download button for processed video
-                output_video_path = os.path.join(project_root, "data", "output_video.mp4")
-                if os.path.exists(output_video_path):
-                    with open(output_video_path, "rb") as file:
-                        st.success("Traduction terminée! ✅")
-                        st.download_button(
-                            label="⬇️ Télécharger la vidéo traduite",
-                            data=file,
-                            file_name="video_traduite.mp4",
-                            mime="video/mp4"
-                        )
-                else: 
-                    st.error("La vidéo traduite n'a pas été générée correctement.")
+                    main(temp_path, original_language, final_language)
+
+                    output_video_path = os.path.join(project_root, "data", "output_video.mp4")
+                    if os.path.exists(output_video_path):
+                        with open(output_video_path, "rb") as file:
+                            st.success("Traduction terminée! ✅")
+                            st.video(output_video_path)
+                            st.download_button(
+                                label="⬇️ Télécharger la vidéo traduite",
+                                data=file,
+                                file_name="video_traduite.mp4",
+                                mime="video/mp4"
+                            )
+                    else: 
+                        st.error("La vidéo traduite n'a pas été générée correctement.")
             
             except yt_dlp.utils.DownloadError as e:
                 error_msg = str(e).lower()
@@ -135,7 +127,6 @@ if original_language != final_language :
                             'cookiefile': tmp_path,
                             'quiet': True,
                             'noplaylist': True,
-                            'format': 'best',  # Get best quality
                             'outtmpl': '%(title)s.%(ext)s',  # Save with video title as filename
                             'http_headers': {
                                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36',
@@ -145,29 +136,19 @@ if original_language != final_language :
 
                         try:
                             with yt_dlp.YoutubeDL(ydl_opts_with_cookies) as ydl:
-                                with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as video_file:
-                                    # Download video with cookies
-                                    info = ydl.extract_info(url, download=True)
-                                    video_path = ydl.prepare_filename(info)
-                                    
-                                    # Move downloaded file to temporary location
-                                    os.rename(video_path, video_file.name)
-                                    temp_path = video_file.name
-                                
-                                # Process the video
-                                main(temp_path, original_language, final_language)
-                                
-                                # Display video info
-                                st.success("Vidéo téléchargée avec cookies ✅")
-                                st.write("**Titre :**", info.get('title'))
-                                st.write("**Auteur :**", info.get('uploader'))
-                                st.video(temp_path)  # Show local video instead of URL
+                                # Download video with cookies
+                                info = ydl.extract_info(url, download=True)
+                                video_path = ydl.prepare_filename(info)
+                                 
+                                 # Process the video
+                                main(video_path, original_language, final_language)                              
                 
                                 # Add download button for processed video
                                 output_video_path = os.path.join(project_root, "data", "output_video.mp4")
                                 if os.path.exists(output_video_path):
                                     with open(output_video_path, "rb") as file:
                                         st.success("Traduction terminée! ✅")
+                                        st.video(output_video_path)
                                         st.download_button(
                                             label="⬇️ Télécharger la vidéo traduite",
                                             data=file,
@@ -181,10 +162,10 @@ if original_language != final_language :
                         except Exception as e2:
                             st.error("Erreur même avec cookies. Veuilez rafraichir les cookies.")
                             
-                st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) pour exporter vos cookies depuis **FireFox**.""")
-                st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Get cookies.txt](https://chrome.google.com/webstore/detail/get-cookiestxt/lopibhbgjfmmaghejbkojkfjbdhkccme) pour exporter vos cookies depuis **Chrome**.""")
-
-                if "not a valid url" in error_msg or "invalid" in error_msg:
+                    st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) pour exporter vos cookies depuis **FireFox**.""")
+                    st.markdown("""**Besoin d’aide ?** Utilisez l’extension [Get cookies.txt](https://chrome.google.com/webstore/detail/get-cookiestxt/lopibhbgjfmmaghejbkojkfjbdhkccme) pour exporter vos cookies depuis **Chrome**.""")
+                    
+                elif "not a valid url" in error_msg or "invalid" in error_msg:
                     st.error("❌ L'URL fournie est invalide.")
                 else:
                     st.error(f"❌ Erreur inconnue. Veuillez vérifier l'URL ou le fichier de cookies.")
