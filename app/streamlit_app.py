@@ -55,11 +55,14 @@ if original_language != final_language :
     if uploaded_file is not None:
         with st.spinner("Traitement en cours..."):
             
-            # - - - - - - 
-            # Appelle la fonction de traitement vidéo, à modifier 
-            srt_path = tor.process_video(uploaded_file)
-            st.success("Sous-titres générés !")
-            st.download_button("⬇️ Télécharger les sous-titres", open(srt_path, "rb"), file_name="subtitles.srt")
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_file:
+                temp_file.write(uploaded_file.read())
+                temp_path = temp_file.name
+            main(temp_path, original_language, final_language)
+            
+            #srt_path = tor.process_video(uploaded_file)
+            #st.success("Sous-titres générés !")
+            #st.download_button("⬇️ Télécharger les sous-titres", open(srt_path, "rb"), file_name="subtitles.srt")
             
             
     url = st.text_input("Entre l'URL de la vidéo YouTube :")
@@ -118,7 +121,8 @@ if original_language != final_language :
                             
                             # - - - - - - 
                             # Appelle la fonction de traitement vidéo, à modifier 
-            
+                            main(tmp_path, original_language, final_language)
+                            
                             info = ydl.extract_info(url, download=False)
                             st.success("Vidéo analysée avec cookies ✅")
                             st.write("**Titre :**", info.get('title'))

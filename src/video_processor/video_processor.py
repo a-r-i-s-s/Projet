@@ -8,7 +8,7 @@ import subprocess
 from src.config.config_loader import Config
 import ffmpeg
 
-def burn_subtitles(video_path=Config.VIDEO_PATH, 
+def burn_subtitles(video_path, 
                   subtitle_path=Config.SUBTITLE_PATH,
                   output_path=Config.OUTPUT_VIDEO_PATH):
     try:

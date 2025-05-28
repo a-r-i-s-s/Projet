@@ -1,90 +1,90 @@
 1
 00:00:00,000 --> 00:00:03,000
 我的家
-My home
+Ma maison
 
 2
 00:00:08,000 --> 00:00:11,000
 这是我睡觉的房间
-This is the room where I sleep
+C'est la pièce où je dors
 
 3
 00:00:12,000 --> 00:00:14,000
 我在我世里睡觉
-I'm sleeping in my world
+Je dors dans mon monde
 
 4
 00:00:21,000 --> 00:00:23,000
 这是我洗澡的地方
-This is where I take a shower
+C'est là que je prends une douche
 
 5
 00:00:24,000 --> 00:00:27,000
 我在洗手间里洗澡
-I'm taking a shower in the bathroom
+Je prends une douche dans la salle de bain
 
 6
 00:00:31,000 --> 00:00:33,000
 这是我做饭的地方
-This is my cooking place
+C'est mon lieu de cuisine
 
 7
 00:00:34,000 --> 00:00:37,000
 我在除房里做饭
-I'm cooking in the room
+Je cuisine dans la pièce
 
 8
 00:00:47,000 --> 00:00:50,000
 这是我吃饭的地方
-This is my place to eat
+C'est mon endroit pour manger
 
 9
 00:00:51,000 --> 00:00:53,000
 我在餐厅里吃饭
-I'm having a meal in the restaurant
+Je prends un repas dans le restaurant
 
 10
 00:01:01,000 --> 00:01:04,000
 这是我跟爸爸交谈的地方
-This is where I talk to my dad
+C'est là que je parle à mon père
 
 11
 00:01:06,000 --> 00:01:09,000
 我跟爸爸在客厅里说话
-I'm talking to my dad in the living room
+Je parle à mon père dans le salon
 
 12
 00:01:16,000 --> 00:01:19,000
 这是我们停车的地方
-This is where we park
+C'est là que nous nous garons
 
 13
 00:01:20,000 --> 00:01:23,000
 我们把车停在车库里
-We parked our car in the garage
+Nous avons garé notre voiture dans le garage
 
 14
 00:01:31,000 --> 00:01:34,000
 这是我玩的地方
-This is where I play
+C'est là que je joue
 
 15
 00:01:35,000 --> 00:01:37,000
 我在院子里玩
-I'm playing in the yard
+Je joue dans la cour
 
 16
 00:01:44,000 --> 00:01:46,000
 这是我的家
-This is my home
+C'est ma maison
 
 17
 00:01:47,000 --> 00:01:50,000
 我和爸爸妈妈住在一起
-I live with my parents
+Je vis avec mes parents
 
 18
 00:01:51,000 --> 00:01:52,000
 温暖的家
-Warm home
+Maison chaude
 
